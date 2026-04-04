@@ -80,6 +80,16 @@ pip install -r requirements.txt
 python main.py
 ```
 
+### 免安装 EXE 版本
+
+如果你不想安装 Python 环境，可以直接下载打包好的 EXE 版本：
+
+1. 前往 [Releases 页面](https://github.com/zhansongqiang/PDFTools/releases) 下载最新版本
+2. 解压后双击 `PDF转Word工具.exe` 即可运行
+3. EXE 包含所有依赖（PyQt6、PaddleOCR、OpenCV 等），无需额外安装
+
+> **注意**：EXE 版本体约 **500MB**（含 PaddleOCR、OpenCV 等 AI/CV 库），PaddleOCR 首次运行会自动下载模型文件（约 80MB）。
+
 ### 可选：启用 OCR 功能
 
 如需提取图片中的文字，安装 OCR 引擎：

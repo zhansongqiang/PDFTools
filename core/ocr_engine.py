@@ -63,6 +63,26 @@ class OCREngine:
 
         return "\n".join(lines)
 
+    def is_chart_image(self, image_data: bytes | np.ndarray,
+                       img_width: float = 0, img_height: float = 0,
+                       page_width: float = 0, page_height: float = 0) -> bool:
+        """判断图片是否为图表而非扫描文档
+
+        图表特征：面积占页面 < 50%（柱状图、饼图等嵌入式图表）
+        扫描文档特征：面积接近整页（> 80%）
+        """
+        # 基于面积占比判断（最可靠的指标）
+        if img_width > 0 and img_height > 0 and page_width > 0 and page_height > 0:
+            area_ratio = (img_width * img_height) / (page_width * page_height)
+            # 面积 < 50% 的基本都是嵌入式图表/图片，不需要 OCR
+            if area_ratio < 0.5:
+                return True
+            # 面积 > 80% 的基本都是扫描页面，需要 OCR
+            if area_ratio > 0.8:
+                return False
+
+        return False
+
     def is_available(self) -> bool:
         """检查 PaddleOCR 是否可用"""
         try:
